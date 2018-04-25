@@ -18,7 +18,6 @@ app.post('/updates', (req, res) => {
     console.log({
         updates: updates
     })
-    console.log(req.body.length)
 
     res.send({
         updates: updates,
