@@ -1,9 +1,7 @@
 // Add logic to this script to poll server every second for updated pixels.
 
-let clientUpdates = [];
-
-
-// console.log(clientUpdates);
+let clientLength = clientUpdates.length;
+let latest = 0;
 
 function fetchLatestUpdate() {
     // clientUpdates.push([row, col, paint_color]);
@@ -13,23 +11,30 @@ function fetchLatestUpdate() {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({clientUpdates})
+        body: JSON.stringify({
+            clientUpdates,
+            length: latest
+           
+        })
     }
     
     fetch('/updates', optionsObject)
     .then(response => response.json())
     .then(data => {
-        // setColor()
-        console.log(data.updates.length);
-        //data represents an object { updates: [0, 1, green]
-                                //    updates: [0, 4, red] 
-                                //  }
-
         
+        for (i = 0; i < data.updates.length; i++) {
+            bitmap.setColor(data.updates[i][0], data.updates[i][1], data.updates[i][2]);
+        }
         
+        latest = data.length;
+        
+        // console.log(data);
+        console.log(latest);
+        
+        clientUpdates = [];
         
     })
-    setTimeout(fetchLatestUpdate, 3000);
+    setTimeout(fetchLatestUpdate, 4000);
 }
 
 fetchLatestUpdate();

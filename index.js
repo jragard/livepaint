@@ -2,9 +2,7 @@ const express = require("express");
 const port = 3000;
 const app = express();
 
-const updates = [];
-const newUpdates = updates.length;
-
+let updates = [];
 
 app.use(express.static('public'));
 app.use(express.json());
@@ -12,21 +10,24 @@ app.use(express.json());
 
 app.post('/updates', (req, res) => {
     
-    const array = updates.concat(req.body.clientUpdates);
+    if(req.body.clientUpdates) {
+    updates = updates.concat(req.body.clientUpdates);
+    }
+
+    updates = updates.slice(req.body.length)
+
+
     
-    // res.send(updates);
-    // console.log(updates);
+    console.log({updates: updates})
+    console.log(req.body.length)
+
+
+    res.send({updates: updates,
+              length: updates.length  
+    })
     
-    res.send({
-        updates: array,
-        newUpdates: newUpdates
-    });
-    
-    console.log({
-        updates: array
-    });
-    
-    
+
+
 });
 
 

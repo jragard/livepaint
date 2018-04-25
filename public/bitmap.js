@@ -1,3 +1,6 @@
+let clientUpdates = [];
+
+
 function Bitmap(width, height) {
     this.grid = [];
     for(var row = 0; row < height; row++) {
@@ -32,13 +35,13 @@ Bitmap.prototype.setColor = function(row, col, color) {
     this.grid[row][col] = color;
     this.cells[row][col].style.background = color;
     clientUpdates.push([row, col, color]);
-    // console.log(clientUpdates);
+    console.log(clientUpdates);
     
 }
 
 Bitmap.prototype.handleEvent = function(event) {
     if(event.type === "click") {
-        // fetchLatestUpdate(row, col, paint_color);
+        
         
         var row = parseInt(event.currentTarget.dataset.row);
         var col = parseInt(event.currentTarget.dataset.col);
